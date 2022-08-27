@@ -1,20 +1,23 @@
-﻿BankAccount bank = new BankAccount();
-bank.SetId(21376231);
-bank.SetBalance(2313.4353m);
-bank.SetType("credit");
-Console.WriteLine($"ID:{bank.SeeId()} Balance:{bank.SeeBalance()} Type:{bank.SeeType()}");
+﻿BankAccount a1 = new BankAccount();
+BankAccount b1 = new BankAccount();
+BankAccount c1 = new BankAccount();
+a1.SetId();
+b1.SetId();
+c1.SetId();
+Console.WriteLine($"{a1.SeeId()},{b1.SeeId()},{c1.SeeId()}");
 public class BankAccount
 {
+    private static int _randomid=1;
     private int _id;
     public int SeeId()
     {
        return _id;
     }
-    public void SetId(int id)
+    public void SetId()
     {
-        _id=id;
+                _id = _randomid++;
     }
-    private decimal _balance;
+      private decimal _balance;
     public decimal SeeBalance()
     {
         return _balance;
