@@ -1,10 +1,11 @@
 ﻿BankAccount a1 = new BankAccount();
-BankAccount b1 = new BankAccount();
-BankAccount c1 = new BankAccount();
-a1.SetId();
-b1.SetId();
-c1.SetId();
-Console.WriteLine($"{a1.SeeId()},{b1.SeeId()},{c1.SeeId()}");
+BankAccount b1 = new BankAccount(43.21m);
+BankAccount c1 = new BankAccount("credit");
+BankAccount d1 = new BankAccount(123.65m,"deposit");
+a1.Info();
+b1.Info();
+c1.Info();
+d1.Info();
 public class BankAccount
 {
     private static int _randomid=1;
@@ -13,33 +14,24 @@ public class BankAccount
     {
        return _id;
     }
-    public void SetId()
+    public BankAccount() : this(2)
     {
-                _id = _randomid++;
     }
-      private decimal _balance;
-    public decimal SeeBalance()
+    private decimal _balance;
+        private Type _type;
+    public BankAccount(decimal balance):this(balance,"budgetary")
     {
-        return _balance;
     }
-    public void SetBalance(decimal balance)
+    public BankAccount(string type): this (0,type)
+    {
+    }
+    public BankAccount( decimal balance, string type)
     {
         _balance = balance;
-    }
-    private enum Type
-    {
-        settlement,
-        credit,
-        deposit,
-        budgetary
-    }
-    private Type _type;
-    public void SetType(string type)
-    {
-        switch(type)
+        switch (type)
         {
             case "settlement":
-                _type=Type.settlement ;
+                _type = Type.settlement;
                 break;
             case "credit":
                 _type = Type.credit;
@@ -50,14 +42,32 @@ public class BankAccount
             case "budgetary":
                 _type = Type.budgetary;
                 break;
-                default : 
+            default:
                 Console.WriteLine("Указан неккоректный тип счета");
                 break;
         }
+        _id = _randomid++;
     }
-    public string SeeType()
+
+    public decimal SeeBalance()
+    {
+        return _balance;
+    }
+        private enum Type
+    {
+        settlement,
+        credit,
+        deposit,
+        budgetary
+    }
+     public string SeeType()
     {
         return _type.ToString();
     }
+    public void Info()
+    {
+        Console.WriteLine($"{SeeId()},{SeeBalance()},{SeeType()}");
+    }
 }
+
 
