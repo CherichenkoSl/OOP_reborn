@@ -2,23 +2,21 @@
 BankAccount b1 = new BankAccount(43.21m);
 BankAccount c1 = new BankAccount("credit");
 BankAccount d1 = new BankAccount(123.65m,"deposit");
-a1.Info();
-b1.Info();
-c1.Info();
-d1.Info();
+Console.WriteLine($"{a1.Balance},{a1.Id},{a1.TypeAcc}");
+Console.WriteLine($"{b1.Balance},{b1.Id},{b1.TypeAcc}");
+Console.WriteLine($"{c1.Balance},{c1.Id},{c1.TypeAcc}");
+Console.WriteLine($"{d1.Balance},{d1.Id},{d1.TypeAcc}");
 public class BankAccount
 {
     private static int _randomid=1;
     private int _id;
-    public int SeeId()
-    {
-       return _id;
-    }
+    public int Id { get { return _id; } }
     public BankAccount() : this(2)
     {
     }
     private decimal _balance;
-        private Type _type;
+    public decimal Balance { get { return _balance; }set { _balance = value; } }
+    private Type _type;
     public BankAccount(decimal balance):this(balance,"budgetary")
     {
     }
@@ -27,46 +25,44 @@ public class BankAccount
     }
     public BankAccount( decimal balance, string type)
     {
-        _balance = balance;
-        switch (type)
-        {
-            case "settlement":
-                _type = Type.settlement;
-                break;
-            case "credit":
-                _type = Type.credit;
-                break;
-            case "deposit":
-                _type = Type.deposit;
-                break;
-            case "budgetary":
-                _type = Type.budgetary;
-                break;
-            default:
-                Console.WriteLine("Указан неккоректный тип счета");
-                break;
-        }
-        _id = _randomid++;
+        Balance = balance;
+        TypeAcc=type;
+        _id= _randomid++;
     }
-
-    public decimal SeeBalance()
-    {
-        return _balance;
-    }
-        private enum Type
+    private enum Type
     {
         settlement,
         credit,
         deposit,
         budgetary
     }
-     public string SeeType()
+    public string TypeAcc
     {
-        return _type.ToString();
-    }
-    public void Info()
-    {
-        Console.WriteLine($"{SeeId()},{SeeBalance()},{SeeType()}");
+        get
+        {
+            return _type.ToString();
+        }
+        set
+        {
+            switch (value)
+            {
+                case "settlement":
+                    _type = Type.settlement;
+                    break;
+                case "credit":
+                    _type = Type.credit;
+                    break;
+                case "deposit":
+                    _type = Type.deposit;
+                    break;
+                case "budgetary":
+                    _type = Type.budgetary;
+                    break;
+                default:
+                    Console.WriteLine("Указан неккоректный тип счета");
+                    break;
+            }
+        }
     }
 }
 
