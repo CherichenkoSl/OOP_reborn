@@ -1,17 +1,18 @@
-﻿BankAccount a1 = new BankAccount();
-BankAccount b1 = new BankAccount(43.21m);
+﻿BankAccount b1 = new BankAccount(43.21m);
 BankAccount c1 = new BankAccount("credit");
 BankAccount d1 = new BankAccount(123.65m,"deposit");
-Console.WriteLine($"{a1.Balance},{a1.Id},{a1.TypeAcc}");
+BankAccount a1 = new BankAccount();
 Console.WriteLine($"{b1.Balance},{b1.Id},{b1.TypeAcc}");
 Console.WriteLine($"{c1.Balance},{c1.Id},{c1.TypeAcc}");
 Console.WriteLine($"{d1.Balance},{d1.Id},{d1.TypeAcc}");
+Console.WriteLine($"{a1.Balance},{a1.Id},{a1.TypeAcc}");
+a1.Transfer(b1, 15.3214m);
 public class BankAccount
 {
     private static int _randomid=1;
     private int _id;
     public int Id { get { return _id; } }
-    public BankAccount() : this(2)
+    public BankAccount() : this(213,"deposit")
     {
     }
     private decimal _balance;
@@ -36,6 +37,21 @@ public class BankAccount
         deposit,
         budgetary
     }
+    public void Transfer(BankAccount sender, decimal sum)
+    {
+        if (sum<=sender.Balance)
+        {
+            sender.Balance -= sum;
+            Balance += sum;
+            Console.WriteLine("Перевод выполнен");
+            Console.WriteLine(sender.Balance);
+            Console.WriteLine(Balance);
+        }
+        else
+        {
+            Console.WriteLine("Недостаточно средств");
+        }
+    }
     public string TypeAcc
     {
         get
@@ -59,11 +75,9 @@ public class BankAccount
                     _type = Type.budgetary;
                     break;
                 default:
-                    Console.WriteLine("Указан неккоректный тип счета");
+                    _type = Type.settlement;
                     break;
             }
         }
     }
 }
-
-
